@@ -19,7 +19,7 @@ export default class Start extends React.Component {
   }
 
   changeBgColor = (newBgColor) => {
-    this.setState({ bgColor: newBgColor });
+    this.setState({ bgColor: newBgColor.bgColor });
   };
   render() {
     return (
@@ -59,7 +59,12 @@ export default class Start extends React.Component {
               <Button
                 style={styles.chatBtn}
                 title="Start Chatting"
-                onPress={() => this.props.navigation.navigate('Chat', { name: this.state.name })}
+                onPress={() =>
+                  this.props.navigation.navigate('Chat', {
+                    name: this.state.name,
+                    bgColor: this.state.bgColor,
+                  })
+                }
               />
             </View>
           </View>
