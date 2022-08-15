@@ -21,15 +21,20 @@ export default class Chat extends React.Component {
     };
   }
   componentDidMount() {
-    //Set name according to the state through props
+    //Assign the state of name to a variable through props from Start.js
     let name = this.props.route.params.name;
+    //Set the title of the screen to the state of name via setOptions method.
     this.props.navigation.setOptions({ title: name });
-    //Set Background color accroding to the state through props
+
+    //Assign the state of bgColor to a variable through props from Start.js
     const { bgColor } = this.props.route.params;
+    //Update the state of bgColor to the state received from Start.js
     this.setState({ bgColor });
-    //Set the state of messages to show a system message, avatar buble, date, etc..
+
+    //Set messages through setState
     this.setState({
       messages: [
+        //Opening message
         {
           _id: 1,
           text: 'Hello Developer',
@@ -40,6 +45,7 @@ export default class Chat extends React.Component {
             avatar: 'https://placeimg.com/140/140/any',
           },
         },
+        //System Message
         {
           _id: 2,
           text: 'This is a system message',
