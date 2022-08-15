@@ -36,6 +36,12 @@ export default class Chat extends React.Component {
       messages: [
         //Opening message
         {
+          _id: 2,
+          text: name + ' has entered the chat',
+          createdAt: new Date(),
+          system: true,
+        },
+        {
           _id: 1,
           text: 'Hello Developer',
           createdAt: new Date(),
@@ -47,10 +53,37 @@ export default class Chat extends React.Component {
         },
         //System Message
         {
-          _id: 2,
-          text: name + ' has entered the chat',
+          _id: 3,
+          text: 'Hi, this is a normal message',
           createdAt: new Date(),
-          system: true,
+        },
+        {
+          _id: 4,
+          text: 'Hi! are you enjoying using ChatUp?',
+          createdAt: new Date(Date.UTC(2016, 5, 14, 17, 20, 0)),
+          user: {
+            _id: 3,
+            name: 'Tamir Kahalany',
+            avatar: 'https://placeimg.com/140/140/any',
+          },
+          quickReplies: {
+            type: 'radio', // or 'checkbox',
+            keepIt: true,
+            values: [
+              {
+                title: '😋 Yes',
+                value: 'yes',
+              },
+              {
+                title: 'Definetly Yes',
+                value: 'yes_picture',
+              },
+              {
+                title: 'Most Definetly',
+                value: 'no',
+              },
+            ],
+          },
         },
       ],
     });
@@ -61,6 +94,7 @@ export default class Chat extends React.Component {
       messages: GiftedChat.append(previousState.messages, messages),
     }));
   }
+  //Method to add the previous state of quick reply messages to the current state.
 
   //RenderBubble customizes the chat bubble
   renderBubble(props) {

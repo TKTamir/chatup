@@ -34,7 +34,7 @@ export default class Start extends React.Component {
               style={styles.textInput}
               onChangeText={(name) => this.setState({ name })}
               value={this.state.name}
-              placeholder="Your Name"
+              placeholder="Enter your Name"
             />
             <View style={styles.colorContainer}>
               <Text style={styles.colorTitle}>Choose Background Color:</Text>
@@ -42,32 +42,32 @@ export default class Start extends React.Component {
                 {/* TouchableOpacity changes the opacity to give feedback onPress */}
                 <TouchableOpacity
                   accessible={true}
-                  accessibilityLabel="More options"
-                  accessibilityHint="Lets you choose to send an image or your geolocation."
+                  accessibilityLabel="Choose color Marshland"
+                  accessibilityHint="Lets you choose a background color."
                   accessibilityRole="button"
                   style={[styles.color1, styles.colorPicker]}
                   onPress={() => this.changeBgColor({ bgColor: '#090C08' })}
                 />
                 <TouchableOpacity
                   accessible={true}
-                  accessibilityLabel="More options"
-                  accessibilityHint="Lets you choose to send an image or your geolocation."
+                  accessibilityLabel="Choose color Mulled Wine"
+                  accessibilityHint="Lets you choose a background color."
                   accessibilityRole="button"
                   style={[styles.color2, styles.colorPicker]}
                   onPress={() => this.changeBgColor({ bgColor: '#474056' })}
                 />
                 <TouchableOpacity
                   accessible={true}
-                  accessibilityLabel="More options"
-                  accessibilityHint="Lets you choose to send an image or your geolocation."
+                  accessibilityLabel="Choose color Regent Gray"
+                  accessibilityHint="Lets you choose a background color."
                   accessibilityRole="button"
                   onPress={() => this.changeBgColor({ bgColor: '#8A95A5' })}
                   style={[styles.color3, styles.colorPicker]}
                 />
                 <TouchableOpacity
                   accessible={true}
-                  accessibilityLabel="More options"
-                  accessibilityHint="Lets you choose to send an image or your geolocation."
+                  accessibilityLabel="Choose color Clay Ash"
+                  accessibilityHint="Lets you choose a background color."
                   accessibilityRole="button"
                   onPress={() => this.changeBgColor({ bgColor: '#B9C6AE' })}
                   style={[styles.color4, styles.colorPicker]}
