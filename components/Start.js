@@ -28,6 +28,10 @@ export default class Start extends React.Component {
           <Text style={styles.title}>ChatUp</Text>
           <View style={styles.box}>
             <TextInput
+              accessible={true}
+              accessibilityLabel="Text Input"
+              accessibilityHint="Lets you insert your name."
+              accessibilityRole="textinput"
               style={styles.textInput}
               onChangeText={(name) => this.setState({ name })}
               value={this.state.name}
@@ -38,18 +42,34 @@ export default class Start extends React.Component {
               <View style={styles.bgColors}>
                 {/* TouchableOpacity changes the opacity to give feedback onPress */}
                 <TouchableOpacity
+                  accessible={true}
+                  accessibilityLabel="More options"
+                  accessibilityHint="Lets you choose to send an image or your geolocation."
+                  accessibilityRole="button"
                   style={[styles.color1, styles.colorPicker]}
                   onPress={() => this.changeBgColor({ bgColor: '#090C08' })}
                 />
                 <TouchableOpacity
+                  accessible={true}
+                  accessibilityLabel="More options"
+                  accessibilityHint="Lets you choose to send an image or your geolocation."
+                  accessibilityRole="button"
                   style={[styles.color2, styles.colorPicker]}
                   onPress={() => this.changeBgColor({ bgColor: '#474056' })}
                 />
                 <TouchableOpacity
+                  accessible={true}
+                  accessibilityLabel="More options"
+                  accessibilityHint="Lets you choose to send an image or your geolocation."
+                  accessibilityRole="button"
                   onPress={() => this.changeBgColor({ bgColor: '#8A95A5' })}
                   style={[styles.color3, styles.colorPicker]}
                 />
                 <TouchableOpacity
+                  accessible={true}
+                  accessibilityLabel="More options"
+                  accessibilityHint="Lets you choose to send an image or your geolocation."
+                  accessibilityRole="button"
                   onPress={() => this.changeBgColor({ bgColor: '#B9C6AE' })}
                   style={[styles.color4, styles.colorPicker]}
                 />
@@ -57,6 +77,10 @@ export default class Start extends React.Component {
             </View>
             <View style={styles.chatBtnContainer}>
               <Button
+                accessible={true}
+                accessibilityLabel="Start Chatting"
+                accessibilityHint="Lets you move to the chat screen."
+                accessibilityRole="button"
                 style={styles.chatBtn}
                 title="Start Chatting"
                 onPress={() =>

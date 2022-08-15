@@ -1,7 +1,15 @@
 import React from 'react';
-import { View, Text, Button, TextInput, StyleSheet } from 'react-native';
-import { GiftedChat } from 'react-native-gifted-chat';
-import { Platform, KeyboardAvoidingView } from 'react-native';
+import {
+  View,
+  Text,
+  Button,
+  TextInput,
+  StyleSheet,
+  Platform,
+  KeyboardAvoidingView,
+} from 'react-native';
+import { GiftedChat, Bubble } from 'react-native-gifted-chat';
+import {} from 'react-native';
 
 export default class Chat extends React.Component {
   constructor(props) {
@@ -47,11 +55,26 @@ export default class Chat extends React.Component {
       messages: GiftedChat.append(previousState.messages, messages),
     }));
   }
+
+  //RenderBubble customizes the chat bubble
+  renderBubble(props) {
+    return (
+      <Bubble
+        {...props}
+        wrapperStyle={{
+          right: {
+            backgroundColor: '#000',
+          },
+        }}
+      />
+    );
+  }
   render() {
     return (
       <View style={[styles.container, { backgroundColor: this.state.bgColor }]}>
         {/* Render the chat element */}
         <GiftedChat
+          renderBubble={this.renderBubble.bind(this)}
           messages={this.state.messages}
           onSend={(messages) => this.onSend(messages)}
           user={{
@@ -59,7 +82,14 @@ export default class Chat extends React.Component {
           }}
         />
         {Platform.OS === 'android' ? <KeyboardAvoidingView behavior="height" /> : null}
-        <Button title="Go to Start" onPress={() => this.props.navigation.navigate('Start')} />
+        <Button
+          accessible={true}
+          accessibilityLabel="Back to start screen."
+          accessibilityHint="Lets you move back to the start screen."
+          accessibilityRole="button"
+          title="Go to Start"
+          onPress={() => this.props.navigation.navigate('Start')}
+        />
       </View>
     );
   }
