@@ -50,7 +50,7 @@ export default class Start extends React.Component {
                   style={[styles.color3, styles.colorPicker]}
                 />
                 <TouchableOpacity
-                  onPress={() => this.changeBgColor({ bgColor: '#8A95A5' })}
+                  onPress={() => this.changeBgColor({ bgColor: '#B9C6AE' })}
                   style={[styles.color4, styles.colorPicker]}
                 />
               </View>
