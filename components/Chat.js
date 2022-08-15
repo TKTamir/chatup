@@ -9,14 +9,17 @@ export default class Chat extends React.Component {
       bgColor: '#090C08',
     };
   }
-  render() {
+  componentDidMount() {
     //Set name according to the state through props
     let name = this.props.route.params.name;
     this.props.navigation.setOptions({ title: name });
     //Set Background color accroding to the state through props
     const { bgColor } = this.props.route.params;
+    this.setState({ bgColor });
+  }
+  render() {
     return (
-      <View style={([styles.container], { backgroundColor: this.state.bgColor })}>
+      <View style={[styles.container, { backgroundColor: this.state.bgColor }]}>
         <Button title="Go to Start" onPress={() => this.props.navigation.navigate('Start')} />
       </View>
     );
