@@ -31,7 +31,6 @@ export default class Start extends React.Component {
               accessible={true}
               accessibilityLabel="Text Input"
               accessibilityHint="Lets you insert your name."
-              accessibilityRole="textinput"
               style={styles.textInput}
               onChangeText={(name) => this.setState({ name })}
               value={this.state.name}

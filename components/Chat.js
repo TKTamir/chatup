@@ -48,7 +48,7 @@ export default class Chat extends React.Component {
         //System Message
         {
           _id: 2,
-          text: 'This is a system message',
+          text: name + ' has entered the chat',
           createdAt: new Date(),
           system: true,
         },
@@ -87,7 +87,9 @@ export default class Chat extends React.Component {
             _id: 1,
           }}
         />
+        {/* Check if the OS is android, if true adjust the keyboard height to prevent overlap, if false do nothing. */}
         {Platform.OS === 'android' ? <KeyboardAvoidingView behavior="height" /> : null}
+        {/* Return to start screen button */}
         <Button
           accessible={true}
           accessibilityLabel="Back to start screen."
