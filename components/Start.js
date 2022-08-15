@@ -17,7 +17,7 @@ export default class Start extends React.Component {
       bgColor: '#090C08',
     };
   }
-
+  //Method that takes the color picked via touchable opacity and adds it to the state of bgColor that transfers to chat.js
   changeBgColor = (newBgColor) => {
     this.setState({ bgColor: newBgColor.bgColor });
   };

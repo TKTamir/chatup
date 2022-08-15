@@ -19,6 +19,7 @@ export default class Chat extends React.Component {
     //Set Background color accroding to the state through props
     const { bgColor } = this.props.route.params;
     this.setState({ bgColor });
+    //Set the state of messages to show a system message, avatar buble, date, etc..
     this.setState({
       messages: [
         {
@@ -40,6 +41,7 @@ export default class Chat extends React.Component {
       ],
     });
   }
+  //Method to add the previous state of meesages to the current state so messages aren't deleted
   onSend(messages = []) {
     this.setState((previousState) => ({
       messages: GiftedChat.append(previousState.messages, messages),
@@ -48,6 +50,7 @@ export default class Chat extends React.Component {
   render() {
     return (
       <View style={[styles.container, { backgroundColor: this.state.bgColor }]}>
+        {/* Render the chat element */}
         <GiftedChat
           messages={this.state.messages}
           onSend={(messages) => this.onSend(messages)}
