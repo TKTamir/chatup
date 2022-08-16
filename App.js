@@ -7,6 +7,10 @@ import { createStackNavigator } from '@react-navigation/stack';
 
 const Stack = createStackNavigator();
 
+//Import firestore
+const firebase = require('firebase');
+require('firebase/firestore');
+
 export default class App extends React.Component {
   constructor(props) {
     super(props);
