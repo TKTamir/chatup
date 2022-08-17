@@ -22,6 +22,7 @@ export default class Chat extends React.Component {
       name: '',
       bgColor: '#090C08',
       messages: [],
+      uid: 0,
     };
     //Not sure about the placement of the code below, maybe move out of the Class Component later
     const firebaseConfig = {
@@ -41,7 +42,23 @@ export default class Chat extends React.Component {
   componentDidMount() {
     // Creating reference to messages collection
     this.referenceMessagesUser = firebase.firestore().collection('messages');
+
     this.unsubscribe = this.referenceMessagesUser.onSnapshot(this.onCollectionUpdate);
+    //Manage anonymous authentication
+    componentDidMount() {
+      this.authUnsubscribe = firebase.auth().onAuthStateChanged((user) => {
+        if (!user) {
+          firebase.auth().signInAnonymously();
+        }
+        this.setState({
+          uid: user.uid,
+          messages: [],
+        });
+        this.unsubscribe = this.referenceChatMessages
+          .orderBy("createdAt", "desc")
+          .onSnapshot(this.onCollectionUpdate);
+      });
+    }
 
     //Assign the state of name to a variable through props from Start.js
     let name = this.props.route.params.name;
@@ -117,7 +134,7 @@ export default class Chat extends React.Component {
   }
   componentWillUnmount() {
     //Unsubsrice from collection when component unmounts
-    // this.authUnsubscribe();
+    this.authUnsubscribe();
     // this.unsubscribeMessagesUser();
   }
   //Retreive current data in collection and store it in the state of messages
@@ -141,10 +158,10 @@ export default class Chat extends React.Component {
   //Method to add messages to the database
   addMessages() {
     this.referenceMessagesUser.add({
-      _id: messages._id,
-      text: messages.text,
-      createdAt: messages.createdAt.toDate(),
-      user: messages.user,
+      _id: data._id,
+      text: data.text,
+      createdAt: data.createdAt.toDate(),
+      user: data.user,
     });
   }
   //Method to add the previous state of meesages to the current state so messages aren't deleted
