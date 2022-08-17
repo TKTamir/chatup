@@ -115,13 +115,32 @@ export default class Chat extends React.Component {
       ],
     });
   }
+  componentWillUnmount() {
+    //Unsubsrice from collection when component unmounts
+    this.authUnsubscribe();
+    this.unsubscribeMessagesUser();
+  }
+  onCollectionUpdate = (querySnapshot) => {
+    const lists = [];
+    // go through each document
+    querySnapshot.forEach((doc) => {
+      // get the QueryDocumentSnapshot's data
+      var data = doc.data();
+      lists.push({
+        name: data.name,
+        items: data.items.toString(),
+      });
+    });
+    this.setState({
+      lists,
+    });
+  };
   //Method to add the previous state of meesages to the current state so messages aren't deleted
   onSend(messages = []) {
     this.setState((previousState) => ({
       messages: GiftedChat.append(previousState.messages, messages),
     }));
   }
-  //Method to add the previous state of quick reply messages to the current state.
 
   //RenderBubble customizes the chat bubble
   renderBubble(props) {
