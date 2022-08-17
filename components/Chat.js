@@ -44,21 +44,20 @@ export default class Chat extends React.Component {
     this.referenceMessagesUser = firebase.firestore().collection('messages');
 
     this.unsubscribe = this.referenceMessagesUser.onSnapshot(this.onCollectionUpdate);
+
     //Manage anonymous authentication
-    componentDidMount() {
-      this.authUnsubscribe = firebase.auth().onAuthStateChanged((user) => {
-        if (!user) {
-          firebase.auth().signInAnonymously();
-        }
-        this.setState({
-          uid: user.uid,
-          messages: [],
-        });
-        this.unsubscribe = this.referenceChatMessages
-          .orderBy("createdAt", "desc")
-          .onSnapshot(this.onCollectionUpdate);
+    this.authUnsubscribe = firebase.auth().onAuthStateChanged((user) => {
+      if (!user) {
+        firebase.auth().signInAnonymously();
+      }
+      this.setState({
+        uid: user.uid,
+        messages: [],
       });
-    }
+      this.unsubscribe = this.referenceChatMessages
+        .orderBy('createdAt', 'desc')
+        .onSnapshot(this.onCollectionUpdate);
+    });
 
     //Assign the state of name to a variable through props from Start.js
     let name = this.props.route.params.name;
