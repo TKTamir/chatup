@@ -36,14 +36,12 @@ export default class Chat extends React.Component {
     if (!firebase.apps.length) {
       firebase.initializeApp(firebaseConfig);
     }
-    this.referenceMessagesUser = null;
+    this.referenceChatUser = null;
   }
 
   componentDidMount() {
     // Creating reference to messages collection
-    this.referenceMessagesUser = firebase.firestore().collection('messages');
-
-    this.unsubscribe = this.referenceMessagesUser.onSnapshot(this.onCollectionUpdate);
+    this.referenceChatMessages = firebase.firestore().collection('messages');
 
     //Manage anonymous authentication
     this.authUnsubscribe = firebase.auth().onAuthStateChanged((user) => {
@@ -58,6 +56,13 @@ export default class Chat extends React.Component {
         .orderBy('createdAt', 'desc')
         .onSnapshot(this.onCollectionUpdate);
     });
+    this.referenceChatUser = firebase
+      .firestore()
+      .collection('messages')
+      .where('uid', '==', this.state.uid);
+
+    // Listen for collection changes for current user
+    this.unsubscribeChatUser = this.referenceChatUser.onSnapshot(this.onCollectionUpdate);
 
     //Assign the state of name to a variable through props from Start.js
     let name = this.props.route.params.name;
@@ -134,7 +139,7 @@ export default class Chat extends React.Component {
   componentWillUnmount() {
     //Unsubsrice from collection when component unmounts
     this.authUnsubscribe();
-    this.unsubscribe();
+    this.unsubscribeChatUser();
   }
   //Retreive current data in collection and store it in the state of messages
   onCollectionUpdate = (querySnapshot) => {
@@ -156,7 +161,7 @@ export default class Chat extends React.Component {
   };
   //Method to add messages to the database
   addMessages() {
-    this.referenceMessagesUser.add({
+    this.referenceChatUser.add({
       _id: data._id,
       text: data.text,
       createdAt: data.createdAt.toDate(),
