@@ -32,11 +32,10 @@ export default class Chat extends React.Component {
       storageBucket: 'chatup-83ba6.appspot.com',
       messagingSenderId: '95269935264',
     };
-
     if (!firebase.apps.length) {
       firebase.initializeApp(firebaseConfig);
     }
-    this.referenceChatMessagesUser = null;
+    this.referenceChatMessages = null;
   }
 
   componentDidMount() {
@@ -51,6 +50,10 @@ export default class Chat extends React.Component {
       this.setState({
         uid: user.uid,
         messages: [],
+        user: {
+          _id: user.uid,
+          name: name,
+        },
       });
       this.unsubscribe = this.referenceChatMessages
         .orderBy('createdAt', 'desc')
@@ -144,6 +147,7 @@ export default class Chat extends React.Component {
   //Method to add messages to the database
   addMessages(message) {
     this.referenceChatMessages.add({
+      uid: this.state.uid,
       _id: message._id,
       text: message.text,
       createdAt: message.createdAt,
