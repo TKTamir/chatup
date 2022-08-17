@@ -23,8 +23,26 @@ export default class Chat extends React.Component {
       bgColor: '#090C08',
       messages: [],
     };
+    //Not sure about the placement of the code below, maybe move out of the Class Component later
+    const firebaseConfig = {
+      apiKey: 'AIzaSyBF7Rt7YJY9IHWY5uanaYUti9LypNJiDmw',
+      authDomain: 'chatup-83ba6.firebaseapp.com',
+      projectId: 'chatup-83ba6',
+      storageBucket: 'chatup-83ba6.appspot.com',
+      messagingSenderId: '95269935264',
+    };
+
+    if (!firebase.apps.length) {
+      firebase.initializeApp(firebaseConfig);
+    }
+    this.referenceMessagesUser = null;
   }
+
   componentDidMount() {
+    // Creating reference to messages collection
+    this.referenceMessagesUser = firebase.firestore().collection('messages');
+    this.unsubscribe = this.referenceMessagesUser.onSnapshot(this.onCollectionUpdate);
+
     //Assign the state of name to a variable through props from Start.js
     let name = this.props.route.params.name;
     //Set the title of the screen to the state of name via setOptions method.
@@ -60,6 +78,11 @@ export default class Chat extends React.Component {
           _id: 3,
           text: 'Hi, this is a normal message',
           createdAt: new Date(),
+          user: {
+            _id: 2,
+            name: 'React Native',
+            avatar: 'https://placeimg.com/140/140/any',
+          },
         },
         {
           _id: 4,
@@ -113,6 +136,7 @@ export default class Chat extends React.Component {
       />
     );
   }
+
   render() {
     return (
       <View style={[styles.container, { backgroundColor: this.state.bgColor }]}>
