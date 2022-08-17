@@ -134,7 +134,7 @@ export default class Chat extends React.Component {
   componentWillUnmount() {
     //Unsubsrice from collection when component unmounts
     this.authUnsubscribe();
-    // this.unsubscribeMessagesUser();
+    this.unsubscribe();
   }
   //Retreive current data in collection and store it in the state of messages
   onCollectionUpdate = (querySnapshot) => {
