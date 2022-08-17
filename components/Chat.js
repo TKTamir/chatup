@@ -117,8 +117,8 @@ export default class Chat extends React.Component {
   }
   componentWillUnmount() {
     //Unsubsrice from collection when component unmounts
-    this.authUnsubscribe();
-    this.unsubscribeMessagesUser();
+    // this.authUnsubscribe();
+    // this.unsubscribeMessagesUser();
   }
   //Retreive current data in collection and store it in the state of messages
   onCollectionUpdate = (querySnapshot) => {
@@ -135,14 +135,28 @@ export default class Chat extends React.Component {
       });
     });
     this.setState({
-      lists,
+      messages,
     });
   };
+  //Method to add messages to the database
+  addMessages() {
+    this.referenceMessagesUser.add({
+      _id: messages._id,
+      text: messages.text,
+      createdAt: messages.createdAt.toDate(),
+      user: messages.user,
+    });
+  }
   //Method to add the previous state of meesages to the current state so messages aren't deleted
   onSend(messages = []) {
-    this.setState((previousState) => ({
-      messages: GiftedChat.append(previousState.messages, messages),
-    }));
+    this.setState(
+      (previousState) => ({
+        messages: GiftedChat.append(previousState.messages, messages),
+      }),
+      () => {
+        this.addMessages(this.state.messages);
+      }
+    );
   }
 
   //RenderBubble customizes the chat bubble
