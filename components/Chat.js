@@ -120,16 +120,18 @@ export default class Chat extends React.Component {
     this.authUnsubscribe();
     this.unsubscribeMessagesUser();
   }
-  //Retreive current data in collection and store it in the state of lists
+  //Retreive current data in collection and store it in the state of messages
   onCollectionUpdate = (querySnapshot) => {
-    const lists = [];
+    const messages = [];
     // go through each document
     querySnapshot.forEach((doc) => {
       // get the QueryDocumentSnapshot's data
       var data = doc.data();
-      lists.push({
-        name: data.name,
-        items: data.items.toString(),
+      messages.push({
+        _id: data._id,
+        text: data.text,
+        createdAt: data.createdAt.toDate(),
+        user: data.user,
       });
     });
     this.setState({
