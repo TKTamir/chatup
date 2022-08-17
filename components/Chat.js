@@ -36,7 +36,7 @@ export default class Chat extends React.Component {
     if (!firebase.apps.length) {
       firebase.initializeApp(firebaseConfig);
     }
-    this.referenceChatUser = null;
+    this.referenceChatMessagesUser = null;
   }
 
   componentDidMount() {
@@ -56,13 +56,13 @@ export default class Chat extends React.Component {
         .orderBy('createdAt', 'desc')
         .onSnapshot(this.onCollectionUpdate);
     });
-    this.referenceChatUser = firebase
+    this.referenceChatMessagesUser = firebase
       .firestore()
       .collection('messages')
       .where('uid', '==', this.state.uid);
 
     // Listen for collection changes for current user
-    this.unsubscribeChatUser = this.referenceChatUser.onSnapshot(this.onCollectionUpdate);
+    this.unsubscribeChatUser = this.referenceChatMessagesUser.onSnapshot(this.onCollectionUpdate);
 
     //Assign the state of name to a variable through props from Start.js
     let name = this.props.route.params.name;
@@ -141,6 +141,15 @@ export default class Chat extends React.Component {
     this.authUnsubscribe();
     this.unsubscribeChatUser();
   }
+  //Method to add messages to the database
+  addMessages(message) {
+    this.referenceChatMessages.add({
+      _id: message._id,
+      text: message.text,
+      createdAt: message.createdAt,
+      user: message.user,
+    });
+  }
   //Retreive current data in collection and store it in the state of messages
   onCollectionUpdate = (querySnapshot) => {
     const messages = [];
@@ -159,15 +168,7 @@ export default class Chat extends React.Component {
       messages,
     });
   };
-  //Method to add messages to the database
-  addMessages() {
-    this.referenceChatUser.add({
-      _id: data._id,
-      text: data.text,
-      createdAt: data.createdAt.toDate(),
-      user: data.user,
-    });
-  }
+
   //Method to add the previous state of meesages to the current state so messages aren't deleted
   onSend(messages = []) {
     this.setState(
