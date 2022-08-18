@@ -118,7 +118,6 @@ export default class Chat extends React.Component {
   componentWillUnmount() {
     //Unsubsrice from collection when component unmounts
     this.authUnsubscribe();
-    this.unsubscribeChatUser();
   }
   //Method to add messages to the database
   addMessages(messages) {
