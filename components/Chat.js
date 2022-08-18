@@ -80,6 +80,40 @@ export default class Chat extends React.Component {
     const { bgColor } = this.props.route.params;
     //Update the state of bgColor to the state received from Start.js
     this.setState({ bgColor });
+
+    //Set messages through setState
+    this.setState({
+      messages: [
+        //Opening message
+        {
+          _id: 2,
+          text: name + ' has entered the chat',
+          createdAt: new Date(),
+          system: true,
+        },
+        {
+          _id: 1,
+          text: 'Hello Developer',
+          createdAt: new Date(),
+          user: {
+            _id: 2,
+            name: 'React Native',
+            avatar: 'https://placeimg.com/140/140/any',
+          },
+        },
+        //System Message
+        {
+          _id: 3,
+          text: 'Hi, this is a normal message',
+          createdAt: new Date(),
+          user: {
+            _id: 2,
+            name: 'React Native',
+            avatar: 'https://placeimg.com/140/140/any',
+          },
+        },
+      ],
+    });
   }
   componentWillUnmount() {
     //Unsubsrice from collection when component unmounts
