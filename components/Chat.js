@@ -9,7 +9,7 @@ import {
   KeyboardAvoidingView,
 } from 'react-native';
 import { GiftedChat, Bubble } from 'react-native-gifted-chat';
-import {} from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 //Import firestore
 const firebase = require('firebase');
