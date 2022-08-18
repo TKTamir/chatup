@@ -10,6 +10,7 @@ import {
 } from 'react-native';
 import { GiftedChat, Bubble } from 'react-native-gifted-chat';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import NetInfo from '@react-native-community/netinfo';
 
 //Import firestore
 const firebase = require('firebase');
