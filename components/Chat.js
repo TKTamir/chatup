@@ -37,8 +37,22 @@ export default class Chat extends React.Component {
       uid: '0',
     };
   }
+  //Get messages from asyncStorage or set an empty array if no messages found
+  async getMessages() {
+    let messages = '';
+    try {
+      messages = (await AsyncStorage.getItem('messages')) || [];
+      this.setState({
+        messages: JSON.parse(messages),
+      });
+    } catch (error) {
+      console.log(error.message);
+    }
+  }
 
   componentDidMount() {
+    //Retrieve chat messages from asyncStorage
+    this.getMessages();
     // Creating reference to messages collection
     this.referenceChatMessages = firebase.firestore().collection('messages');
 
