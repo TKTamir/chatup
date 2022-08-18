@@ -80,68 +80,6 @@ export default class Chat extends React.Component {
     const { bgColor } = this.props.route.params;
     //Update the state of bgColor to the state received from Start.js
     this.setState({ bgColor });
-
-    //Set messages through setState
-    this.setState({
-      messages: [
-        //Opening message
-        {
-          _id: 2,
-          text: name + ' has entered the chat',
-          createdAt: new Date(),
-          system: true,
-        },
-        {
-          _id: 1,
-          text: 'Hello Developer',
-          createdAt: new Date(),
-          user: {
-            _id: 2,
-            name: 'React Native',
-            avatar: 'https://placeimg.com/140/140/any',
-          },
-        },
-        //System Message
-        {
-          _id: 3,
-          text: 'Hi, this is a normal message',
-          createdAt: new Date(),
-          user: {
-            _id: 2,
-            name: 'React Native',
-            avatar: 'https://placeimg.com/140/140/any',
-          },
-        },
-        {
-          _id: 4,
-          text: 'Hi! are you enjoying using ChatUp?',
-          createdAt: new Date(Date.UTC(2016, 5, 14, 17, 20, 0)),
-          user: {
-            _id: 3,
-            name: 'Tamir Kahalany',
-            avatar: 'https://placeimg.com/140/140/any',
-          },
-          quickReplies: {
-            type: 'radio', // or 'checkbox',
-            keepIt: true,
-            values: [
-              {
-                title: '😋 Yes',
-                value: 'yes',
-              },
-              {
-                title: 'Definetly Yes',
-                value: 'yes_picture',
-              },
-              {
-                title: 'Most Definetly',
-                value: 'no',
-              },
-            ],
-          },
-        },
-      ],
-    });
   }
   componentWillUnmount() {
     //Unsubsrice from collection when component unmounts
