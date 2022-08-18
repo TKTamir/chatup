@@ -74,6 +74,15 @@ export default class Chat extends React.Component {
   componentDidMount() {
     //Retrieve chat messages from asyncStorage
     this.getMessages();
+
+    //Check if user is online or offline
+    NetInfo.fetch().then((connection) => {
+      if (connection.isConnected) {
+        console.log('online');
+      } else {
+        console.log('offline');
+      }
+    });
     // Creating reference to messages collection
     this.referenceChatMessages = firebase.firestore().collection('messages');
 
@@ -177,6 +186,13 @@ export default class Chat extends React.Component {
         }}
       />
     );
+  }
+
+  renderInputToolbar(props) {
+    if (this.state.isConnected == false) {
+    } else {
+      return <InputToolbar {...props} />;
+    }
   }
 
   render() {
