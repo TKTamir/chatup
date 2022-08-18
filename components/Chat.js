@@ -22,7 +22,7 @@ export default class Chat extends React.Component {
       name: '',
       bgColor: '#090C08',
       messages: [],
-      uid: 0,
+      uid: '0',
     };
     //Not sure about the placement of the code below, maybe move out of the Class Component later
     const firebaseConfig = {
@@ -145,7 +145,8 @@ export default class Chat extends React.Component {
     this.unsubscribeChatUser();
   }
   //Method to add messages to the database
-  addMessages(message) {
+  addMessages(messages) {
+    message = messages[0];
     this.referenceChatMessages.add({
       uid: this.state.uid,
       _id: message._id,
