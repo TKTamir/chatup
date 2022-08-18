@@ -74,7 +74,6 @@ export default class Chat extends React.Component {
 
   componentDidMount() {
     //Retrieve chat messages from asyncStorage
-    this.getMessages();
 
     //Check if user is online or offline
     NetInfo.fetch().then((connection) => {
@@ -82,38 +81,43 @@ export default class Chat extends React.Component {
         this.setState({
           isConnected: true,
         });
+
+        // Reference used to load messages from FireStore
+        this.referenceChatMessagesUser = firebase
+          .firestore()
+          .collection('messages')
+          .where('uid', '==', this.state.uid);
+
+        //Manage anonymous authentication
+        this.authUnsubscribe = firebase.auth().onAuthStateChanged((user) => {
+          if (!user) {
+            try {
+              firebase.auth().signInAnonymously();
+            } catch ({ error }) {
+              alert(error);
+            }
+          }
+          this.setState({
+            uid: user.uid,
+            user: {
+              _id: user.uid,
+              name: name,
+            },
+            messages: [],
+          });
+          this.unsubscribe = this.referenceChatMessages
+            .orderBy('createdAt', 'desc')
+            .onSnapshot(this.onCollectionUpdate);
+        });
       } else {
-        console.log('offline');
+        this.setState({
+          isConnected: false,
+        });
+        this.getMessages();
       }
     });
     // Creating reference to messages collection
     this.referenceChatMessages = firebase.firestore().collection('messages');
-
-    //Manage anonymous authentication
-    this.authUnsubscribe = firebase.auth().onAuthStateChanged((user) => {
-      if (!user) {
-        try {
-          firebase.auth().signInAnonymously();
-        } catch ({ error }) {
-          alert(error);
-        }
-      }
-      this.setState({
-        uid: user.uid,
-        user: {
-          _id: user.uid,
-          name: name,
-        },
-        messages: [],
-      });
-      this.unsubscribe = this.referenceChatMessages
-        .orderBy('createdAt', 'desc')
-        .onSnapshot(this.onCollectionUpdate);
-    });
-    this.referenceChatMessagesUser = firebase
-      .firestore()
-      .collection('messages')
-      .where('uid', '==', this.state.uid);
 
     // Listen for collection changes for current user
     this.unsubscribeChatUser = this.referenceChatMessagesUser.onSnapshot(this.onCollectionUpdate);
