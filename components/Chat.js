@@ -45,15 +45,19 @@ export default class Chat extends React.Component {
     //Manage anonymous authentication
     this.authUnsubscribe = firebase.auth().onAuthStateChanged((user) => {
       if (!user) {
-        firebase.auth().signInAnonymously();
+        try {
+          firebase.auth().signInAnonymously();
+        } catch ({ error }) {
+          alert(error);
+        }
       }
       this.setState({
         uid: user.uid,
-        messages: [],
         user: {
           _id: user.uid,
           name: name,
         },
+        messages: [],
       });
       this.unsubscribe = this.referenceChatMessages
         .orderBy('createdAt', 'desc')
@@ -146,7 +150,7 @@ export default class Chat extends React.Component {
   }
   //Method to add messages to the database
   addMessages(messages) {
-    message = messages[0];
+    const message = messages[0];
     this.referenceChatMessages.add({
       uid: this.state.uid,
       _id: message._id,
