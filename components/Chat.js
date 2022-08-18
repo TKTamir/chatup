@@ -14,6 +14,18 @@ import {} from 'react-native';
 //Import firestore
 const firebase = require('firebase');
 require('firebase/firestore');
+//Initialize FireBase app.
+const firebaseConfig = {
+  apiKey: 'AIzaSyBF7Rt7YJY9IHWY5uanaYUti9LypNJiDmw',
+  authDomain: 'chatup-83ba6.firebaseapp.com',
+  projectId: 'chatup-83ba6',
+  storageBucket: 'chatup-83ba6.appspot.com',
+  messagingSenderId: '95269935264',
+};
+if (!firebase.apps.length) {
+  firebase.initializeApp(firebaseConfig);
+}
+this.referenceChatMessages = null;
 
 export default class Chat extends React.Component {
   constructor(props) {
@@ -24,18 +36,6 @@ export default class Chat extends React.Component {
       messages: [],
       uid: '0',
     };
-    //Not sure about the placement of the code below, maybe move out of the Class Component later
-    const firebaseConfig = {
-      apiKey: 'AIzaSyBF7Rt7YJY9IHWY5uanaYUti9LypNJiDmw',
-      authDomain: 'chatup-83ba6.firebaseapp.com',
-      projectId: 'chatup-83ba6',
-      storageBucket: 'chatup-83ba6.appspot.com',
-      messagingSenderId: '95269935264',
-    };
-    if (!firebase.apps.length) {
-      firebase.initializeApp(firebaseConfig);
-    }
-    this.referenceChatMessages = null;
   }
 
   componentDidMount() {
