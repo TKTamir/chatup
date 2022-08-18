@@ -25,7 +25,6 @@ const firebaseConfig = {
 if (!firebase.apps.length) {
   firebase.initializeApp(firebaseConfig);
 }
-this.referenceChatMessages = null;
 
 export default class Chat extends React.Component {
   constructor(props) {
@@ -136,6 +135,9 @@ export default class Chat extends React.Component {
         messages: GiftedChat.append(previousState.messages, messages),
       }),
       () => {
+        //Save messages to local storage when a message is sent
+        this.saveMessages();
+        //Add messages to the state when a message is sent
         this.addMessages(this.state.messages);
       }
     );
