@@ -35,6 +35,7 @@ export default class Chat extends React.Component {
       bgColor: '#090C08',
       messages: [],
       uid: '0',
+      isConnected: false,
     };
   }
   //Get messages from asyncStorage or set an empty array if no messages found
