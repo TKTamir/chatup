@@ -26,6 +26,8 @@ const firebaseConfig = {
 if (!firebase.apps.length) {
   firebase.initializeApp(firebaseConfig);
 }
+// Creating reference to messages collection
+this.referenceChatMessages = firebase.firestore().collection('messages');
 
 export default class Chat extends React.Component {
   constructor(props) {
@@ -116,8 +118,6 @@ export default class Chat extends React.Component {
         this.getMessages();
       }
     });
-    // Creating reference to messages collection
-    this.referenceChatMessages = firebase.firestore().collection('messages');
 
     // Listen for collection changes for current user
     this.unsubscribeChatUser = this.referenceChatMessagesUser.onSnapshot(this.onCollectionUpdate);
