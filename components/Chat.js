@@ -49,6 +49,27 @@ export default class Chat extends React.Component {
     }
   }
 
+  //Save messages to asyncStorage
+  async saveMessages() {
+    try {
+      await AsyncStorage.setItem('messages', JSON.stringify(this.state.messages));
+    } catch (error) {
+      console.log(error.message);
+    }
+  }
+
+  //Delete messages from asyncStorage
+  async deleteMessages() {
+    try {
+      await AsyncStorage.removeItem('messages');
+      this.setState({
+        messages: [],
+      });
+    } catch (error) {
+      console.log(error.message);
+    }
+  }
+
   componentDidMount() {
     //Retrieve chat messages from asyncStorage
     this.getMessages();
