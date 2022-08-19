@@ -8,7 +8,7 @@ import {
   Platform,
   KeyboardAvoidingView,
 } from 'react-native';
-import { GiftedChat, Bubble } from 'react-native-gifted-chat';
+import { GiftedChat, Bubble, InputToolbar } from 'react-native-gifted-chat';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import NetInfo from '@react-native-community/netinfo';
 
@@ -174,6 +174,14 @@ export default class Chat extends React.Component {
     );
   }
 
+  // Don't render inputToolbar if user is offline
+  renderInputToolbar(props) {
+    if (this.state.isConnected == false) {
+    } else {
+      return <InputToolbar {...props} />;
+    }
+  }
+
   //RenderBubble customizes the chat bubble
   renderBubble(props) {
     return (
@@ -186,13 +194,6 @@ export default class Chat extends React.Component {
         }}
       />
     );
-  }
-  // Don't render inputToolbar if user is offline
-  renderInputToolbar(props) {
-    if (this.state.isConnected == false) {
-    } else {
-      return <InputToolbar {...props} />;
-    }
   }
 
   render() {
