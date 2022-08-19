@@ -26,8 +26,6 @@ const firebaseConfig = {
 if (!firebase.apps.length) {
   firebase.initializeApp(firebaseConfig);
 }
-// Creating reference to messages collection
-this.referenceChatMessages = firebase.firestore().collection('messages');
 
 export default class Chat extends React.Component {
   constructor(props) {
@@ -75,7 +73,10 @@ export default class Chat extends React.Component {
   }
 
   componentDidMount() {
-    //Retrieve chat messages from asyncStorage
+    //Assign the state of name to a variable through props from Start.js
+    let name = this.props.route.params.name;
+    //Set the title of the screen to the state of name via setOptions method.
+    this.props.navigation.setOptions({ title: name });
 
     //Check if user is online or offline
     NetInfo.fetch().then((connection) => {
@@ -85,10 +86,8 @@ export default class Chat extends React.Component {
         });
 
         // Reference used to load messages from FireStore
-        this.referenceChatMessagesUser = firebase
-          .firestore()
-          .collection('messages')
-          .where('uid', '==', this.state.uid);
+        this.referenceChatMessagesUser = firebase.firestore().collection('messages');
+        // .where('uid', '==', this.state.uid);
 
         //Manage anonymous authentication
         this.authUnsubscribe = firebase.auth().onAuthStateChanged((user) => {
@@ -107,6 +106,8 @@ export default class Chat extends React.Component {
             },
             messages: [],
           });
+          // Creating reference to messages collection
+          this.referenceChatMessages = firebase.firestore().collection('messages');
           this.unsubscribe = this.referenceChatMessages
             .orderBy('createdAt', 'desc')
             .onSnapshot(this.onCollectionUpdate);
@@ -115,17 +116,10 @@ export default class Chat extends React.Component {
         this.setState({
           isConnected: false,
         });
+        //Retrieve chat messages from asyncStorage
         this.getMessages();
       }
     });
-
-    // Listen for collection changes for current user
-    this.unsubscribeChatUser = this.referenceChatMessagesUser.onSnapshot(this.onCollectionUpdate);
-
-    //Assign the state of name to a variable through props from Start.js
-    let name = this.props.route.params.name;
-    //Set the title of the screen to the state of name via setOptions method.
-    this.props.navigation.setOptions({ title: name });
 
     //Assign the state of bgColor to a variable through props from Start.js
     const { bgColor } = this.props.route.params;
@@ -194,7 +188,7 @@ export default class Chat extends React.Component {
       />
     );
   }
-
+  // Don't render inputToolbar if user is offline
   renderInputToolbar(props) {
     if (this.state.isConnected == false) {
     } else {
