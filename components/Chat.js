@@ -87,7 +87,6 @@ export default class Chat extends React.Component {
 
         // Reference used to load messages from FireStore
         this.referenceChatMessagesUser = firebase.firestore().collection('messages');
-        // .where('uid', '==', this.state.uid);
 
         //Manage anonymous authentication
         this.authUnsubscribe = firebase.auth().onAuthStateChanged((user) => {
