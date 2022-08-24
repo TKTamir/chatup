@@ -30,6 +30,8 @@ export default class Chat extends React.Component {
       messages: [],
       uid: '0',
       isConnected: false,
+      image: null,
+      location: null,
     };
   }
   //Get messages from asyncStorage or set an empty array if no messages found
@@ -153,6 +155,8 @@ export default class Chat extends React.Component {
         text: data.text,
         createdAt: data.createdAt.toDate(),
         user: data.user,
+        image: data.image || null,
+        location: data.location || null,
       });
     });
     this.setState({
