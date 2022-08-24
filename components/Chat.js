@@ -4,6 +4,7 @@ import { GiftedChat, Bubble, InputToolbar } from 'react-native-gifted-chat';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import NetInfo from '@react-native-community/netinfo';
 import CustomActions from './CustomActions';
+import MapView from 'react-native-maps';
 
 //Import firestore
 const firebase = require('firebase');
@@ -83,7 +84,7 @@ export default class Chat extends React.Component {
 
         //Manage anonymous authentication
         this.authUnsubscribe = firebase.auth().onAuthStateChanged((user) => {
-          if (user == null) {
+          if (!user) {
             try {
               console.log('inside');
               firebase.auth().signInAnonymously();
@@ -130,7 +131,7 @@ export default class Chat extends React.Component {
     this.referenceChatMessages.add({
       uid: this.state.uid,
       _id: message._id,
-      text: message.text,
+      text: message.text || '',
       createdAt: message.createdAt,
       user: message.user,
       image: message.image || null,
