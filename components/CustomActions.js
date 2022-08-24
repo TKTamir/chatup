@@ -2,8 +2,9 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import firebase from 'firebase';
+import 'firebase/firestore';
 //import permissions and imagepicker
-import * as Permissions from 'expo-permissions';
+// import * as Permissions from 'expo-permissions';
 import * as ImagePicker from 'expo-image-picker';
 import * as Location from 'expo-location';
 
@@ -39,12 +40,12 @@ export default class CustomActions extends React.Component {
   //Let the user pick an image from the device's image gallery
   imagePicker = async () => {
     // expo permission
-    const { status } = await Permissions.askAsync(Permissions.CAMERA_ROLL);
+    const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
     try {
       if (status === 'granted') {
         // pick image
         const result = await ImagePicker.launchImageLibraryAsync({
-          mediaTypes: ImagePicker.MediaTypeOptions.Images, // only images are allowed
+          mediaTypes: 'Images', // only images are allowed
         }).catch((error) => console.log(error));
         // canceled process
         if (!result.cancelled) {
@@ -59,11 +60,11 @@ export default class CustomActions extends React.Component {
 
   //Let the user take a photo with the device's camera
   takePhoto = async () => {
-    const { status } = await Permissions.askAsync(Permissions.CAMERA, Permissions.CAMERA_ROLL);
+    const { status } = await ImagePicker.requestCameraPermissionsAsync();
     try {
       if (status === 'granted') {
         const result = await ImagePicker.launchCameraAsync({
-          mediaTypes: ImagePicker.MediaTypeOptions.Images,
+          mediaTypes: 'Images',
         }).catch((error) => console.log(error));
 
         if (!result.cancelled) {
@@ -79,7 +80,7 @@ export default class CustomActions extends React.Component {
   //Get the location of the user via GPS
   getLocation = async () => {
     try {
-      const { status } = await Permissions.askAsync(Permissions.LOCATION);
+      const { status } = await Location.requestForegroundPermissionsAsync();
       if (status === 'granted') {
         const result = await Location.getCurrentPositionAsync({}).catch((error) =>
           console.log(error)
