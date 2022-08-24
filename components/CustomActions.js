@@ -8,6 +8,34 @@ import * as ImagePicker from 'expo-image-picker';
 import * as Location from 'expo-location';
 
 export default class CustomActions extends React.Component {
+  //Upload images to firebase
+  uploadImageFetch = async (uri) => {
+    const blob = await new Promise((resolve, reject) => {
+      const xhr = new XMLHttpRequest();
+      xhr.onload = function () {
+        resolve(xhr.response);
+      };
+      xhr.onerror = function (e) {
+        console.log(e);
+        reject(new TypeError('Network request failed'));
+      };
+      xhr.responseType = 'blob';
+      xhr.open('GET', uri, true);
+      xhr.send(null);
+    });
+
+    const imageNameBefore = uri.split('/');
+    const imageName = imageNameBefore[imageNameBefore.length - 1];
+
+    const ref = firebase.storage().ref().child(`images/${imageName}`);
+
+    const snapshot = await ref.put(blob);
+
+    blob.close();
+
+    return await snapshot.ref.getDownloadURL();
+  };
+
   //Let the user pick an image from the device's image gallery
   imagePicker = async () => {
     // expo permission
@@ -70,34 +98,6 @@ export default class CustomActions extends React.Component {
     } catch (error) {
       console.log(error.message);
     }
-  };
-
-  //Upload images to firebase
-  uploadImageFetch = async (uri) => {
-    const blob = await new Promise((resolve, reject) => {
-      const xhr = new XMLHttpRequest();
-      xhr.onload = function () {
-        resolve(xhr.response);
-      };
-      xhr.onerror = function (e) {
-        console.log(e);
-        reject(new TypeError('Network request failed'));
-      };
-      xhr.responseType = 'blob';
-      xhr.open('GET', uri, true);
-      xhr.send(null);
-    });
-
-    const imageNameBefore = uri.split('/');
-    const imageName = imageNameBefore[imageNameBefore.length - 1];
-
-    const ref = firebase.storage().ref().child(`images/${imageName}`);
-
-    const snapshot = await ref.put(blob);
-
-    blob.close();
-
-    return await snapshot.ref.getDownloadURL();
   };
 
   //Define what happens in + button
