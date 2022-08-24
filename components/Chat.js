@@ -1,13 +1,5 @@
 import React from 'react';
-import {
-  View,
-  Text,
-  Button,
-  TextInput,
-  StyleSheet,
-  Platform,
-  KeyboardAvoidingView,
-} from 'react-native';
+import { View, Text, Button, StyleSheet, Platform, KeyboardAvoidingView } from 'react-native';
 import { GiftedChat, Bubble, InputToolbar } from 'react-native-gifted-chat';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import NetInfo from '@react-native-community/netinfo';
@@ -91,13 +83,15 @@ export default class Chat extends React.Component {
 
         //Manage anonymous authentication
         this.authUnsubscribe = firebase.auth().onAuthStateChanged((user) => {
-          if (!user) {
+          if (user == null) {
             try {
+              console.log('inside');
               firebase.auth().signInAnonymously();
             } catch ({ error }) {
               alert(error);
             }
           }
+          console.log('setting state');
           this.setState({
             uid: user.uid,
             user: {
@@ -139,6 +133,8 @@ export default class Chat extends React.Component {
       text: message.text,
       createdAt: message.createdAt,
       user: message.user,
+      image: message.image || null,
+      location: message.location || null,
     });
   }
   //Retreive current data in collection and store it in the state of messages

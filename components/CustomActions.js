@@ -1,11 +1,11 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import firebase from 'firebase';
 //import permissions and imagepicker
 import * as Permissions from 'expo-permissions';
 import * as ImagePicker from 'expo-image-picker';
 import * as Location from 'expo-location';
-import firebase from 'firebase';
 
 export default class CustomActions extends React.Component {
   //Let the user pick an image from the device's image gallery
@@ -124,6 +124,7 @@ export default class CustomActions extends React.Component {
       }
     );
   };
+
   render() {
     return (
       <TouchableOpacity style={[styles.container]} onPress={this.onActionPress}>
