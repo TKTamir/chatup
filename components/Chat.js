@@ -24,6 +24,7 @@ if (!firebase.apps.length) {
 export default class Chat extends React.Component {
   constructor(props) {
     super(props);
+    this._isMounted = false;
     this.state = {
       name: '',
       bgColor: '#090C08',
@@ -124,6 +125,7 @@ export default class Chat extends React.Component {
     this.setState({ bgColor });
   }
   componentWillUnmount() {
+    this._isMounted = false;
     //Unsubsrice from collection when component unmounts
     if (this.isConnected) {
       this.unsubscribe();
