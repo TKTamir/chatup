@@ -128,7 +128,14 @@ export default class CustomActions extends React.Component {
 
   render() {
     return (
-      <TouchableOpacity style={[styles.container]} onPress={this.onActionPress}>
+      <TouchableOpacity
+        accessible={true}
+        accessibilityLabel="Share media menu"
+        accessibilityHint="Send an image or location"
+        accessibilityRole="button"
+        style={[styles.container]}
+        onPress={this.onActionPress}
+      >
         <View style={[styles.wrapper, this.props.wrapperStyle]}>
           <Text style={[styles.iconText, this.props.iconTextStyle]}>+</Text>
         </View>
