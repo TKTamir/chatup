@@ -7,7 +7,9 @@
     "android": "expo start --android",
     "ios": "expo start --ios",
     "web": "expo start --web",
-    "eject": "expo eject"
+    "eject": "expo eject",
+    "update:pods": "cd ios && pod install --repo-update && cd .. && patch-package",
+    "postinstall": "npm run update:pods"
   },
   "dependencies": {
     "@expo/webpack-config": "~0.16.2",
